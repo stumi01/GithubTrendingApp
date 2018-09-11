@@ -3,6 +3,8 @@ package com.bencestumpf.test.githubviewer.di.compoents
 import android.app.Application
 import com.bencestumpf.test.githubviewer.GithubViewerApplication
 import com.bencestumpf.test.githubviewer.di.modules.ActivityBuilderModule
+import com.bencestumpf.test.githubviewer.di.modules.ProviderModule
+import com.bencestumpf.test.githubviewer.di.modules.RetrofitModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -10,7 +12,8 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, ActivityBuilderModule::class])
+@Component(modules = [AndroidInjectionModule::class, ActivityBuilderModule::class,
+    RetrofitModule::class, ProviderModule::class])
 interface AppComponent {
 
     @Component.Builder

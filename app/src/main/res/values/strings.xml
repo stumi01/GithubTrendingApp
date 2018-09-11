@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Github Viewer</string>
+    <string name="trending_repos">Trending Repositories</string>
 </resources>
