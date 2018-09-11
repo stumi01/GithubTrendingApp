@@ -14,7 +14,11 @@ class GitRepositoriesAdapter(context: Context) : SupportAnnotatedAdapter(context
 
     @JvmField
     @ViewType(layout = R.layout.view_repository_row,
-            views = [ViewField(id = R.id.repository_name, name = "name", type = TextView::class)])
+            views = [ViewField(id = R.id.repository_name, name = "name", type = TextView::class),
+                ViewField(id = R.id.repository_description, name = "description", type = TextView::class),
+                ViewField(id = R.id.repository_language, name = "language", type = TextView::class),
+                ViewField(id = R.id.repository_stars, name = "stars", type = TextView::class)
+            ])
     val repositoryRow: Int = 0
 
     override fun getItemCount(): Int = repositories.size
@@ -23,6 +27,9 @@ class GitRepositoriesAdapter(context: Context) : SupportAnnotatedAdapter(context
         vh?.let {
             val repository = repositories[position]
             it.name.text = repository.name
+            it.description.text = repository.description
+            it.language.text = repository.language
+            it.stars.text = repository.stars?.toString()
         }
     }
 
