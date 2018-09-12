@@ -1,19 +1,26 @@
 package com.bencestumpf.test.githubviewer.presentation.details
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.bencestumpf.test.githubviewer.R
+import com.bencestumpf.test.githubviewer.domain.models.GitRepository
+import com.bencestumpf.test.githubviewer.presentation.common.MVPActivity
 
-class DetailsActivity : AppCompatActivity() {
-
+class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsView {
     companion object {
         const val EXTRA_REPOSITORY_ID = "EXTRA_REPOSITORY_ID"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trending)
+    override fun setupView() {
         val repoId = intent.getStringExtra(EXTRA_REPOSITORY_ID)
-
+        presenter.setup(repoId)
     }
+
+    override fun getLayoutId(): Int = R.layout.activity_trending
+
+    override fun getView(): DetailsView = this
+
+    override fun showContent(repository: GitRepository) {
+        supportActionBar?.title = repository.name
+        supportActionBar?.subtitle = repository.owner
+    }
+
 }

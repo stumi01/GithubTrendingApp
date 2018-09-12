@@ -28,8 +28,8 @@ class GitRepositoriesAdapter(context: Context, private val onRepositoryClick: (S
         vh?.let {
             val repository = repositories[position]
             Log.d("STUMI", "bindViewHolder $it")
-            it.name.text = repository.name
-            it.description.text = repository.description
+            it.name.text = repository.fullName
+            it?.description.text = repository.description
             it.language.text = repository.language
             it.stars.text = repository.stars.toString()
 

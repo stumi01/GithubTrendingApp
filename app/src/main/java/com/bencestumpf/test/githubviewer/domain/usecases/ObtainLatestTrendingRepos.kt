@@ -7,8 +7,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ObtainLatestTrendingRepos @Inject constructor(private val gitRepositoryProvider: GitRepositoryProvider) {
-    fun getObservable(): Single<List<GitRepository>> {
+class ObtainLatestTrendingRepos @Inject constructor(private val gitRepositoryProvider: GitRepositoryProvider)
+    : Usecase<List<GitRepository>> {
+
+    override fun getSubscribable(): Single<List<GitRepository>> {
         return gitRepositoryProvider.getTrendingRepos()
     }
+
 }

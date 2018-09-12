@@ -14,6 +14,17 @@ import javax.inject.Singleton
 class GitRepositoryDataStore @Inject constructor(private val apiService: GithubApiService) : GitRepositoryProvider.Remote {
 
 
+    override fun getRepository(id: String): Single<GitRepository> {
+        return apiService.getRepository(id)
+                .map {
+                    if (it.isSuccessful) {
+                        return@map it.body()?.let(this::mapRepo)
+                    }
+                    throw NetworkErrorException("Cannot fetch the trending repositories")
+                }
+    }
+
+
     override fun getTrending(rangeInDays: Int): Single<List<GitRepository>> {
         return apiService.searchRepositories("stars", "desc", "topic:android")//, "created:>`date -v-7d '+%Y-%m-%d'`")
                 .map {
@@ -27,7 +38,9 @@ class GitRepositoryDataStore @Inject constructor(private val apiService: GithubA
 
     private fun mapRepo(model: RepositoryResponseModel): GitRepository =
             GitRepository(model.id,
-                    model.full_name?.let { it } ?: "",
+                    model.full_name,
+                    model.name,
+                    model.owner.login,
                     model.description?.let { it } ?: "",
                     model.language?.let { it } ?: "",
                     model.stargazers_count?.let { it } ?: 0)
