@@ -6,5 +6,6 @@ interface TrendingView {
     fun showLoading()
     fun showError()
     fun showContent(repositories: List<GitRepository>)
+    fun navigateToDetailsView(id: String)
 
 }

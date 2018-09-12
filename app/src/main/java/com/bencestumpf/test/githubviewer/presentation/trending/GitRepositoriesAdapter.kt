@@ -1,6 +1,7 @@
 package com.bencestumpf.test.githubviewer.presentation.trending
 
 import android.content.Context
+import android.util.Log
 import android.widget.TextView
 import com.bencestumpf.test.githubviewer.R
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
@@ -9,7 +10,7 @@ import com.hannesdorfmann.annotatedadapter.annotation.ViewType
 import com.hannesdorfmann.annotatedadapter.support.recyclerview.SupportAnnotatedAdapter
 
 
-class GitRepositoriesAdapter(context: Context) : SupportAnnotatedAdapter(context), GitRepositoriesAdapterBinder {
+class GitRepositoriesAdapter(context: Context, private val onRepositoryClick: (String) -> Unit) : SupportAnnotatedAdapter(context), GitRepositoriesAdapterBinder {
     private val repositories: ArrayList<GitRepository> = ArrayList()
 
     @JvmField
@@ -26,10 +27,13 @@ class GitRepositoriesAdapter(context: Context) : SupportAnnotatedAdapter(context
     override fun bindViewHolder(vh: GitRepositoriesAdapterHolders.RepositoryRowViewHolder?, position: Int) {
         vh?.let {
             val repository = repositories[position]
+            Log.d("STUMI", "bindViewHolder $it")
             it.name.text = repository.name
             it.description.text = repository.description
             it.language.text = repository.language
             it.stars.text = repository.stars.toString()
+
+            it.itemView.setOnClickListener { onRepositoryClick.invoke(repository.id) }
         }
     }
 

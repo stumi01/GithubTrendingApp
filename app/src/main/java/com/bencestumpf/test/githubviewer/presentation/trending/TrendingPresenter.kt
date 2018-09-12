@@ -21,11 +21,11 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
 
     fun attachView(view: TrendingView) {
         this.view = view
-        startLoading()
     }
 
     private fun startLoading() {
         view?.showLoading()
+        Log.d("STUMI", "startLoading")
         subscriptions += obtainLatestTrendingRepos.getObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,6 +34,7 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
 
     private fun onDataArrived(repositories: List<GitRepository>) {
         presentationModel = repositories
+        Log.d("STUMI", "onDataArrived " + repositories?.size)
         view?.showContent(repositories)
     }
 
@@ -63,6 +64,10 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
 
     fun onRefresh() {
         startLoading()
+    }
+
+    fun onRepositoryClick(id: String) {
+        view?.navigateToDetailsView(id)
     }
 
 }

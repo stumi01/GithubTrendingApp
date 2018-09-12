@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Github Viewer</string>
     <string name="trending_repos">Trending Repositories</string>
+    <string name="error_header">Oh snap :(</string>
+    <string name="error_rescription">There was an error\n Please check your internet connection and try again.</string>
+    <string name="retry">Retry</string>
 </resources>
