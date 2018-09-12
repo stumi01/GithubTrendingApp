@@ -30,8 +30,8 @@ class GitRepositoriesAdapter(context: Context, private val onRepositoryClick: (S
             Log.d("STUMI", "bindViewHolder $it")
             it.name.text = repository.fullName
             it?.description.text = repository.description
-            it.language.text = repository.language
-            it.stars.text = repository.stars.toString()
+            it?.language.text = repository.language
+            it?.stars.text = repository.stars.toString()
 
             it.itemView.setOnClickListener { onRepositoryClick.invoke(repository.id) }
         }

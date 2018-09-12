@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import butterknife.BindView
+import butterknife.OnClick
 import com.bencestumpf.test.githubviewer.R
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
 import com.bencestumpf.test.githubviewer.presentation.common.MVPActivity
@@ -76,5 +77,10 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
         this.startActivity(Intent(this, DetailsActivity::class.java).apply {
             putExtra(EXTRA_REPOSITORY_ID, id)
         })
+    }
+
+    @OnClick(R.id.retry_button)
+    fun onRetryClick() {
+        presenter.onRefresh()
     }
 }

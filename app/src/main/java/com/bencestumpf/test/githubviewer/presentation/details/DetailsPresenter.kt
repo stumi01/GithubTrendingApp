@@ -17,6 +17,10 @@ class DetailsPresenter @Inject constructor(private val obtainRepoDetails: Obtain
 
     fun setup(repoId: String?) {
         this.repoId = repoId
+        load()
+    }
+
+    private fun load() {
         repoId?.let {
             execute(obtainRepoDetails.withParams(it), this::onDataArrived, this::onError)
         }
@@ -28,9 +32,14 @@ class DetailsPresenter @Inject constructor(private val obtainRepoDetails: Obtain
 
     private fun onError(error: Throwable) {
         Log.e(TAG, "Error during loading.", error)
+        view?.showError()
     }
 
     fun onRepoUrlClick(url: String) {
         view?.navigateToUrl(url)
+    }
+
+    fun onRetry() {
+        load()
     }
 }

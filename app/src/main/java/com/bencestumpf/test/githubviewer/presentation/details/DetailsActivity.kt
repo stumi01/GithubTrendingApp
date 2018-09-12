@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.TextView
 import butterknife.BindView
+import butterknife.OnClick
 import com.bencestumpf.test.githubviewer.R
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
 import com.bencestumpf.test.githubviewer.presentation.common.MVPActivity
@@ -41,12 +42,12 @@ class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsVie
     @BindView(R.id.details_readme)
     lateinit var openView: View
 
-
     override fun setupView() {
         val repoId = intent.getStringExtra(EXTRA_REPOSITORY_ID)
         presenter.setup(repoId)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_navigate_before_white_48)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -82,6 +83,16 @@ class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsVie
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
         startActivity(i)
+    }
+
+    override fun showError() {
+        content.visibility = View.GONE
+        errorView.visibility = View.VISIBLE
+    }
+
+    @OnClick(R.id.retry_button)
+    fun onRetryClick() {
+        presenter.onRetry()
     }
 
 }

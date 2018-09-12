@@ -7,5 +7,6 @@ interface DetailsView : MVPView {
 
     fun showContent(repository: GitRepository)
     fun navigateToUrl(url: String)
+    fun showError()
 
 }
