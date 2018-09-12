@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v4.util.Pair
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.bencestumpf.test.githubviewer.R
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
@@ -12,7 +13,11 @@ import com.hannesdorfmann.annotatedadapter.annotation.ViewType
 import com.hannesdorfmann.annotatedadapter.support.recyclerview.SupportAnnotatedAdapter
 
 
-class GitRepositoriesAdapter(context: Context, private val onRepositoryClick: (String, Array<android.support.v4.util.Pair<View, String>>) -> Unit) : SupportAnnotatedAdapter(context), GitRepositoriesAdapterBinder {
+class GitRepositoriesAdapter(context: Context,
+                             private val onRepositoryClick: (String, Array<android.support.v4.util.Pair<View, String>>) -> Unit,
+                             private val onLoadMoreClik: () -> Unit)
+    : SupportAnnotatedAdapter(context), GitRepositoriesAdapterBinder {
+
     private val repositories: ArrayList<GitRepository> = ArrayList()
 
     @JvmField
@@ -24,7 +29,19 @@ class GitRepositoriesAdapter(context: Context, private val onRepositoryClick: (S
             ])
     val repositoryRow: Int = 0
 
-    override fun getItemCount(): Int = repositories.size
+    @JvmField
+    @ViewType(layout = R.layout.view_load_more_row,
+            views = [ViewField(id = R.id.load_more, name = "button", type = Button::class)
+            ])
+    val loadMoreRow: Int = 1
+
+    override fun getItemCount(): Int {
+        return if (repositories.size > 1) {
+            repositories.size + 1
+        } else {
+            repositories.size
+        }
+    }
 
     override fun bindViewHolder(vh: GitRepositoriesAdapterHolders.RepositoryRowViewHolder?, position: Int) {
         vh?.let {
@@ -43,8 +60,27 @@ class GitRepositoriesAdapter(context: Context, private val onRepositoryClick: (S
         }
     }
 
+    override fun bindViewHolder(vh: GitRepositoriesAdapterHolders.LoadMoreRowViewHolder?, position: Int) {
+        vh?.let {
+            it.button.setOnClickListener { onLoadMoreClik.invoke() }
+        }
+    }
+
     fun setData(newData: List<GitRepository>) {
         repositories.clear()
+        repositories.addAll(newData)
+        notifyDataSetChanged()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        if (position == repositories.size) {
+            return loadMoreRow
+        }
+
+        return repositoryRow
+    }
+
+    fun addData(newData: List<GitRepository>) {
         repositories.addAll(newData)
         notifyDataSetChanged()
     }

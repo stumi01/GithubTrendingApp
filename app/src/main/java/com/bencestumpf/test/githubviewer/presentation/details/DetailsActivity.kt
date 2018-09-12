@@ -66,7 +66,7 @@ class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsVie
         language.text = repository.language
         forks.text = repository.forks.toString()
         stars.text = repository.stars.toString()
-        watchers.text = repository.stars.toString()
+        watchers.text = repository.watchers.toString()
         issues.text = getString(R.string.issues, repository.issues.toString())
         description.text = repository.description
         val p = PrettyTime()

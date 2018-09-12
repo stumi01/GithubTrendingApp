@@ -13,18 +13,18 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
 
     private val TAG: String = TrendingPresenter::class.java.simpleName
 
-    private var presentationModel: List<GitRepository>? = null
-
+    private var presentationModel: ArrayList<GitRepository> = ArrayList()
+    private var currentPage = 1
 
     private fun startLoading() {
         view?.showLoading()
-        Log.d("STUMI", "startLoading")
-        execute(obtainLatestTrendingRepos, this::onDataArrived, this::onError)
+        currentPage = 1
+        presentationModel.clear()
+        execute(obtainLatestTrendingRepos.withParams(currentPage), this::onDataArrived, this::onError)
     }
 
     private fun onDataArrived(repositories: List<GitRepository>) {
-        presentationModel = repositories
-        Log.d("STUMI", "onDataArrived " + repositories?.size)
+        presentationModel.addAll(repositories)
         view?.showContent(repositories)
     }
 
@@ -34,7 +34,7 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
     }
 
     fun onResume() {
-        if (presentationModel == null) {
+        if (presentationModel.isEmpty()) {
             startLoading()
         }
     }
@@ -47,4 +47,18 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
         view?.navigateToDetailsView(id, sharedViews)
     }
 
+    fun onLoadMore() {
+        view?.showLoading()
+        execute(obtainLatestTrendingRepos.withParams(++currentPage), this::onAdditionalDataArrived, this::onError)
+    }
+
+    private fun onAdditionalDataArrived(repositories: List<GitRepository>) {
+        if (repositories.isEmpty()) {
+            currentPage--
+            view?.showNoMoreResultInfo()
+        }
+        presentationModel.addAll(repositories)
+        view?.dataArrived(repositories)
+
+    }
 }

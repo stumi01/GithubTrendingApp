@@ -11,8 +11,8 @@ import java.util.*
 class GitRepositoryProvider(private val remote: Remote, private val cache: Cache) {
     private val dateFormat = SimpleDateFormat("YYYY-MM-dd", Locale.getDefault())
 
-    fun getTrendingRepos(dateRange: Int): Single<List<GitRepository>> {
-        return remote.getTrending(dateFormat.format(DateTime().minusDays(dateRange).toDate()))
+    fun getTrendingRepos(dateRange: Int, page: Int): Single<List<GitRepository>> {
+        return remote.getTrendingPage(dateFormat.format(DateTime().minusDays(dateRange).toDate()), page)
                 .doOnSuccess {
                     cache.add(it)
                 }
@@ -24,9 +24,9 @@ class GitRepositoryProvider(private val remote: Remote, private val cache: Cache
     }
 
     interface Remote {
-        fun getTrending(createdSince: String): Single<List<GitRepository>>
-
         fun getRepository(id: String): Single<GitRepository>
+
+        fun getTrendingPage(createdAfter: String, page: Int): Single<List<GitRepository>>
     }
 
     interface Cache {

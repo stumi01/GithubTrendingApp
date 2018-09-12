@@ -10,8 +10,15 @@ import javax.inject.Singleton
 class ObtainLatestTrendingRepos @Inject constructor(private val gitRepositoryProvider: GitRepositoryProvider)
     : Usecase<List<GitRepository>> {
 
+    private var page: Int = 1
+
     override fun getSubscribable(): Single<List<GitRepository>> {
-        return gitRepositoryProvider.getTrendingRepos(7)
+        return gitRepositoryProvider.getTrendingRepos(7, page)
+    }
+
+    fun withParams(page: Int): ObtainLatestTrendingRepos {
+        this.page = page
+        return this
     }
 
 }

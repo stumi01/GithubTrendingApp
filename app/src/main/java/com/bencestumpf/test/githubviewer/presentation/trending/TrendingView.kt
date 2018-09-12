@@ -10,5 +10,7 @@ interface TrendingView : MVPView {
     fun showError()
     fun showContent(repositories: List<GitRepository>)
     fun navigateToDetailsView(id: String, sharedViews: Array<Pair<View, String>>)
+    fun dataArrived(repositories: List<GitRepository>)
+    fun showNoMoreResultInfo()
 
 }

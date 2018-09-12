@@ -18,6 +18,12 @@ interface GithubApiService {
             : Single<Response<SearchResponseModel>>
 
     @Headers("Content-Type: application/json")
+    @GET("search/repositories")
+    fun searchRepositoriesPage(@Query("sort") sort: String, @Query("order") order: String,
+                               @Query(value = "q", encoded = true) query: String, @Query("page") page: Int)
+            : Single<Response<SearchResponseModel>>
+
+    @Headers("Content-Type: application/json")
     @GET("repositories/{id}")
     fun getRepository(@Path("id") id: String): Single<Response<RepositoryResponseModel>>
 

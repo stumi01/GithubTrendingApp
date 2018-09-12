@@ -1,7 +1,6 @@
 package com.bencestumpf.test.githubviewer.data.net
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import com.bencestumpf.test.githubviewer.data.net.services.GithubApiService
 import com.bencestumpf.test.githubviewer.data.net.services.RepositoryResponseModel
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
@@ -24,11 +23,9 @@ class GitRepositoryDataStore @Inject constructor(private val apiService: GithubA
                 }
     }
 
-
-    override fun getTrending(createdAfter: String): Single<List<GitRepository>> {
-        return apiService.searchRepositories("stars", "desc", "topic:android+created:>$createdAfter")
+    override fun getTrendingPage(createdAfter: String, page: Int): Single<List<GitRepository>> {
+        return apiService.searchRepositoriesPage("stars", "desc", "topic:android+created:>$createdAfter", page)
                 .map {
-                    Log.d("STUMI", "Mapping response")
                     if (it.isSuccessful) {
                         return@map it.body()?.items?.map(this::mapRepo)
                     }

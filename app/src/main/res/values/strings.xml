@@ -8,4 +8,6 @@
     <string name="created_at">Created %s</string>
     <string name="updated_at">Last updated %s</string>
     <string name="issues">Open issues: %s</string>
+    <string name="load_more">Load more</string>
+    <string name="no_more_results">We ran out of trending repos for the week.</string>
 </resources>

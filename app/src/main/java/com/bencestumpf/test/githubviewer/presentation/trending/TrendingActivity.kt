@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import butterknife.BindView
 import butterknife.OnClick
 import com.bencestumpf.test.githubviewer.R
@@ -41,7 +42,7 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
     override fun getView(): TrendingView = this
 
     private fun setupRecycler() {
-        adapter = GitRepositoriesAdapter(this, presenter::onRepositoryClick)
+        adapter = GitRepositoriesAdapter(this, presenter::onRepositoryClick, presenter::onLoadMore)
         trendingRecyclerView.layoutManager = LinearLayoutManager(this)
         trendingRecyclerView.isNestedScrollingEnabled = false
         trendingRecyclerView.adapter = adapter
@@ -61,7 +62,6 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
         swipeRefreshLayout.isRefreshing = true
         errorView.visibility = View.GONE
         swipeRefreshLayout.visibility = View.VISIBLE
-
     }
 
     override fun showError() {
@@ -72,6 +72,11 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
 
     override fun showContent(repositories: List<GitRepository>) {
         adapter.setData(repositories)
+        swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun dataArrived(repositories: List<GitRepository>) {
+        adapter.addData(repositories)
         swipeRefreshLayout.isRefreshing = false
     }
 
@@ -87,4 +92,10 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
     fun onRetryClick() {
         presenter.onRefresh()
     }
+
+    override fun showNoMoreResultInfo() {
+        Toast.makeText(this, R.string.no_more_results,
+                Toast.LENGTH_LONG).show();
+    }
+
 }
