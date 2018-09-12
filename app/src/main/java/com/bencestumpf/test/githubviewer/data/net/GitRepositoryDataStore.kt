@@ -24,6 +24,9 @@ class GitRepositoryDataStore @Inject constructor(private val apiService: GithubA
     }
 
     private fun mapRepo(model: RepositoryResponseModel): GitRepository =
-            GitRepository(model.full_name, model.description, model.language, model.stargazers_count)
+            GitRepository(model.full_name,
+                    model.description,
+                    model.language?.let { it } ?: "",
+                    model.stargazers_count?.let { it } ?: 0)
 
 }

@@ -29,7 +29,7 @@ class GitRepositoriesAdapter(context: Context) : SupportAnnotatedAdapter(context
             it.name.text = repository.name
             it.description.text = repository.description
             it.language.text = repository.language
-            it.stars.text = repository.stars?.toString()
+            it.stars.text = repository.stars.toString()
         }
     }
 

@@ -1,6 +1,7 @@
 package com.bencestumpf.test.githubviewer.presentation.trending
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -17,8 +18,13 @@ class TrendingActivity : AppCompatActivity(), TrendingView {
     @Inject
     lateinit var presenter: TrendingPresenter
 
-    @BindView(R.id.feature_trending_list)
+    @BindView(R.id.trending_swipeRefresh)
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
+    @BindView(R.id.trending_list)
     lateinit var trendingRecyclerView: RecyclerView
+
+    private lateinit var adapter: GitRepositoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -26,33 +32,49 @@ class TrendingActivity : AppCompatActivity(), TrendingView {
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
         supportActionBar?.setTitle(R.string.trending_repos)
-    }
-
-    override fun onResume() {
-        super.onResume()
         presenter.attachView(this)
+        setupSwipeToRefresh()
+        setupRecycler()
     }
 
-    override fun onPause() {
-        presenter.detachView()
-        super.onPause()
-    }
-
-    override fun showLoading() {
-        //TODO
-    }
-
-    override fun showError() {
-        //TODO
-    }
-
-    override fun showContent(repositories: List<GitRepository>) {
-        val adapter = GitRepositoriesAdapter(this)
-        adapter.setData(repositories)
+    private fun setupRecycler() {
+        adapter = GitRepositoriesAdapter(this)
         trendingRecyclerView.layoutManager = LinearLayoutManager(this)
         trendingRecyclerView.isNestedScrollingEnabled = false
         trendingRecyclerView.adapter = adapter
         trendingRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    }
 
+    private fun setupSwipeToRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(presenter::onRefresh)
+    }
+
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        presenter.onPause()
+        super.onPause()
+    }
+
+    override fun showLoading() {
+        swipeRefreshLayout.isRefreshing = true
+    }
+
+    override fun showError() {
+        //TODO
+        swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun showContent(repositories: List<GitRepository>) {
+        adapter.setData(repositories)
+        swipeRefreshLayout.isRefreshing = false
     }
 }
