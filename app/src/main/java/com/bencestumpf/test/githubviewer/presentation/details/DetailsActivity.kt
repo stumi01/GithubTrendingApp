@@ -7,6 +7,7 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
 import com.bencestumpf.test.githubviewer.R
+import com.bencestumpf.test.githubviewer.di.Injector
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
 import com.bencestumpf.test.githubviewer.presentation.common.MVPActivity
 import org.ocpsoft.prettytime.PrettyTime
@@ -16,8 +17,8 @@ class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsVie
     companion object {
 
         const val EXTRA_REPOSITORY_ID = "EXTRA_REPOSITORY_ID"
-    }
 
+    }
 
     @BindView(R.id.error_view)
     lateinit var errorView: View
@@ -41,6 +42,13 @@ class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsVie
     lateinit var description: TextView
     @BindView(R.id.details_readme)
     lateinit var openView: View
+
+
+    override fun injectDependencies() {
+        Injector.getAppComponent()
+                .detailsComponent()
+                .inject(this)
+    }
 
     override fun setupView() {
         val repoId = intent.getStringExtra(EXTRA_REPOSITORY_ID)

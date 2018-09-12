@@ -1,6 +1,7 @@
 package com.bencestumpf.test.githubviewer.domain.providers
 
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
+import com.bencestumpf.test.githubviewer.helper.OpenClass
 import io.reactivex.Maybe
 import io.reactivex.Single
 import org.joda.time.DateTime
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 //Well, in this case the providers should be called repositories but the GitRepositoryRepository is very confusing.
+@OpenClass
 class GitRepositoryProvider(private val remote: Remote, private val cache: Cache) {
     private val dateFormat = SimpleDateFormat("YYYY-MM-dd", Locale.getDefault())
 

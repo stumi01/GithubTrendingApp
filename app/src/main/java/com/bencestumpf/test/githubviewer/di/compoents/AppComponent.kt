@@ -1,29 +1,19 @@
 package com.bencestumpf.test.githubviewer.di.compoents
 
-import android.app.Application
-import com.bencestumpf.test.githubviewer.GithubViewerApplication
-import com.bencestumpf.test.githubviewer.di.modules.ActivityBuilderModule
-import com.bencestumpf.test.githubviewer.di.modules.ProviderModule
-import com.bencestumpf.test.githubviewer.di.modules.RetrofitModule
-import dagger.BindsInstance
+import com.bencestumpf.test.githubviewer.di.modules.AppModule
+import com.bencestumpf.test.githubviewer.presentation.details.di.DetailsComponent
+import com.bencestumpf.test.githubviewer.presentation.trending.di.TrendingComponent
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, ActivityBuilderModule::class,
-    RetrofitModule::class, ProviderModule::class])
+@Component(modules = [AppModule::class])
 interface AppComponent {
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: Application): Builder
+    fun trendingComponent(): TrendingComponent
 
-        fun build(): AppComponent
-    }
 
-    fun inject(app: GithubViewerApplication)
+    fun detailsComponent(): DetailsComponent
 
 }

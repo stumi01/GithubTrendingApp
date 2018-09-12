@@ -1,27 +1,20 @@
 package com.bencestumpf.test.githubviewer
 
-import android.app.Activity
 import android.app.Application
-import com.bencestumpf.test.githubviewer.di.compoents.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import com.bencestumpf.test.githubviewer.di.Injector
+import com.bencestumpf.test.githubviewer.helper.OpenClass
 
-class GithubViewerApplication : Application(), HasActivityInjector {
-
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+@OpenClass
+class GithubViewerApplication : Application() {
 
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder()
-                .application(this)
-                .build().inject(this)
+        initializeInjection()
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityDispatchingAndroidInjector
+    private fun initializeInjection() {
+        Injector.initialize(this)
     }
+
 }

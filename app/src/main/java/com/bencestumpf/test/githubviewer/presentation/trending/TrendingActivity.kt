@@ -12,6 +12,7 @@ import android.widget.Toast
 import butterknife.BindView
 import butterknife.OnClick
 import com.bencestumpf.test.githubviewer.R
+import com.bencestumpf.test.githubviewer.di.Injector
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
 import com.bencestumpf.test.githubviewer.presentation.common.MVPActivity
 import com.bencestumpf.test.githubviewer.presentation.details.DetailsActivity
@@ -30,6 +31,12 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
     lateinit var errorView: View
 
     private lateinit var adapter: GitRepositoriesAdapter
+
+    override fun injectDependencies() {
+        Injector.getAppComponent()
+                .trendingComponent()
+                .inject(this)
+    }
 
     override fun setupView() {
         supportActionBar?.setTitle(R.string.trending_repos)
