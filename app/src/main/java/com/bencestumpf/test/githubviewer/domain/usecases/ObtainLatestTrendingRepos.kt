@@ -11,7 +11,7 @@ class ObtainLatestTrendingRepos @Inject constructor(private val gitRepositoryPro
     : Usecase<List<GitRepository>> {
 
     override fun getSubscribable(): Single<List<GitRepository>> {
-        return gitRepositoryProvider.getTrendingRepos()
+        return gitRepositoryProvider.getTrendingRepos(7)
     }
 
 }

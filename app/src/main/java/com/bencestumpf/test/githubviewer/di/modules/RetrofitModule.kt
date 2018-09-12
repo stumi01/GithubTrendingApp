@@ -29,7 +29,9 @@ class RetrofitModule {
     @Provides
     @Singleton
     fun providesGson(): Gson {
-        return GsonBuilder().create()
+        return GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create()
     }
 
     @Provides

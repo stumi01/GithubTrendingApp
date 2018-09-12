@@ -4,4 +4,8 @@
     <string name="error_header">Oh snap :(</string>
     <string name="error_rescription">There was an error\n Please check your internet connection and try again.</string>
     <string name="retry">Retry</string>
+    <string name="open_in_browser">Open project in browser</string>
+    <string name="created_at">Created %s</string>
+    <string name="updated_at">Last updated %s</string>
+    <string name="issues">Open issues: %s</string>
 </resources>

@@ -29,4 +29,8 @@ class DetailsPresenter @Inject constructor(private val obtainRepoDetails: Obtain
     private fun onError(error: Throwable) {
         Log.e(TAG, "Error during loading.", error)
     }
+
+    fun onRepoUrlClick(url: String) {
+        view?.navigateToUrl(url)
+    }
 }

@@ -6,5 +6,6 @@ import com.bencestumpf.test.githubviewer.presentation.common.MVPView
 interface DetailsView : MVPView {
 
     fun showContent(repository: GitRepository)
+    fun navigateToUrl(url: String)
 
 }

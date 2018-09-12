@@ -25,8 +25,8 @@ class GitRepositoryDataStore @Inject constructor(private val apiService: GithubA
     }
 
 
-    override fun getTrending(rangeInDays: Int): Single<List<GitRepository>> {
-        return apiService.searchRepositories("stars", "desc", "topic:android")//, "created:>`date -v-7d '+%Y-%m-%d'`")
+    override fun getTrending(createdAfter: String): Single<List<GitRepository>> {
+        return apiService.searchRepositories("stars", "desc", "topic:android+created:>$createdAfter")
                 .map {
                     Log.d("STUMI", "Mapping response")
                     if (it.isSuccessful) {
@@ -43,6 +43,11 @@ class GitRepositoryDataStore @Inject constructor(private val apiService: GithubA
                     model.owner.login,
                     model.description?.let { it } ?: "",
                     model.language?.let { it } ?: "",
-                    model.stargazers_count?.let { it } ?: 0)
+                    model.stargazers_count?.let { it } ?: 0,
+                    model.forks?.let { it } ?: 0,
+                    model.watchers?.let { it } ?: 0,
+                    model.open_issues?.let { it } ?: 0,
+                    model.created_at, model.updated_at,
+                    model.html_url?.let { it } ?: "")
 
 }
