@@ -1,6 +1,7 @@
 package com.bencestumpf.test.githubviewer.presentation.trending
 
 import android.util.Log
+import android.view.View
 import com.bencestumpf.test.githubviewer.di.scopes.ActivityScope
 import com.bencestumpf.test.githubviewer.domain.models.GitRepository
 import com.bencestumpf.test.githubviewer.domain.usecases.ObtainLatestTrendingRepos
@@ -42,8 +43,8 @@ class TrendingPresenter @Inject constructor(private val obtainLatestTrendingRepo
         startLoading()
     }
 
-    fun onRepositoryClick(id: String) {
-        view?.navigateToDetailsView(id)
+    fun onRepositoryClick(id: String, sharedViews: Array<android.support.v4.util.Pair<View, String>>) {
+        view?.navigateToDetailsView(id, sharedViews)
     }
 
 }

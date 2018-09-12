@@ -1,6 +1,8 @@
 package com.bencestumpf.test.githubviewer.presentation.trending
 
 import android.content.Intent
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -73,10 +75,12 @@ class TrendingActivity : MVPActivity<TrendingPresenter, TrendingView>(), Trendin
         swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun navigateToDetailsView(id: String) {
+    override fun navigateToDetailsView(id: String, sharedViews: Array<Pair<View, String>>) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *sharedViews)
+
         this.startActivity(Intent(this, DetailsActivity::class.java).apply {
             putExtra(EXTRA_REPOSITORY_ID, id)
-        })
+        }, options.toBundle())
     }
 
     @OnClick(R.id.retry_button)

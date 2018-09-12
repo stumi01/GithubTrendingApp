@@ -8,11 +8,13 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/details_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:transitionName="background">
 
 
         <TextView
-            android:id="@+id/details_languange"
+            android:id="@+id/details_language"
+            android:transitionName="repository_language"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -36,37 +38,17 @@
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintEnd_toStartOf="@+id/details_stars"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/details_languange"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="forks" />
-
-        <TextView
-            android:id="@+id/details_stars"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/baseline_star_rate_black_24"
-            android:drawableStart="@drawable/baseline_star_rate_black_24"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:gravity="center"
             app:layout_constraintEnd_toStartOf="@+id/details_watchers"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/details_forks"
+            app:layout_constraintStart_toEndOf="@+id/details_language"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="stargazers_count" />
+            tools:text="forks" />
 
         <TextView
             android:id="@+id/details_watchers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/baseline_visibility_black_24"
@@ -74,11 +56,32 @@
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
             android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/details_stars"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/details_stars"
+            app:layout_constraintStart_toEndOf="@+id/details_forks"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="watchers" />
+
+        <TextView
+            android:id="@+id/details_stars"
+            android:transitionName="repository_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:drawableLeft="@drawable/baseline_star_rate_black_24"
+            android:drawableStart="@drawable/baseline_star_rate_black_24"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/details_watchers"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="stargazers_count" />
 
         <TextView
             android:id="@+id/details_created"
@@ -104,17 +107,18 @@
 
         <TextView
             android:id="@+id/details_description"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:transitionName="repository_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details_last_commit"
+            app:layout_constraintTop_toBottomOf="@+id/details_language"
             tools:text="Description" />
 
         <TextView
@@ -126,12 +130,12 @@
             android:layout_marginTop="8dp"
             android:drawableLeft="@drawable/baseline_web_black_24"
             android:drawableStart="@drawable/baseline_web_black_24"
+            android:gravity="center"
             android:text="@string/open_in_browser"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
-            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details_description" />
+            app:layout_constraintTop_toBottomOf="@+id/details_last_commit" />
 
         <TextView
             android:id="@+id/details_issues"
@@ -141,7 +145,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details_languange"
+            app:layout_constraintTop_toBottomOf="@+id/details_description"
             tools:text="Issues" />
 
     </android.support.constraint.ConstraintLayout>

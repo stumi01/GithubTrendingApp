@@ -23,7 +23,7 @@ class DetailsActivity : MVPActivity<DetailsPresenter, DetailsView>(), DetailsVie
     lateinit var errorView: View
     @BindView(R.id.details_content)
     lateinit var content: View
-    @BindView(R.id.details_languange)
+    @BindView(R.id.details_language)
     lateinit var language: TextView
     @BindView(R.id.details_forks)
     lateinit var forks: TextView
