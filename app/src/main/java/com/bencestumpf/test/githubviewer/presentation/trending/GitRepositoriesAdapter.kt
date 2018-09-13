@@ -36,7 +36,7 @@ class GitRepositoriesAdapter(context: Context,
     val loadMoreRow: Int = 1
 
     override fun getItemCount(): Int {
-        return if (repositories.size > 1) {
+        return if (repositories.size > 0) {
             repositories.size + 1
         } else {
             repositories.size

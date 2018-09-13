@@ -72,14 +72,14 @@ class GitRepositoryProviderTest {
     @Test
     fun getTrending_updates_cache() {
         //Given
-        `when`(remote.getTrending(any())).thenReturn(Single.just(arrayListOf(dummyRepository, dummyRepository2)))
+        `when`(remote.getTrendingPage(any(), any())).thenReturn(Single.just(arrayListOf(dummyRepository, dummyRepository2)))
 
         //When
-        provider.getTrendingRepos(7).subscribe()
+        provider.getTrendingRepos(7, 1).subscribe()
 
         //Then
         verify(cache).add(any())
-        verify(remote).getTrending(any())
+        verify(remote).getTrendingPage(any(), any())
     }
 
 }
